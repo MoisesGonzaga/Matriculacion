@@ -1,0 +1,241 @@
+USE [master]
+GO
+/****** Object:  Database [DBMatricula]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+CREATE DATABASE [DBMatricula]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DBMatricula', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MYSQLSERVER\MSSQL\DATA\DBMatricula.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'DBMatricula_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MYSQLSERVER\MSSQL\DATA\DBMatricula_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [DBMatricula] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [DBMatricula].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [DBMatricula] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [DBMatricula] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [DBMatricula] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [DBMatricula] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [DBMatricula] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [DBMatricula] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [DBMatricula] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [DBMatricula] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [DBMatricula] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [DBMatricula] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [DBMatricula] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [DBMatricula] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [DBMatricula] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [DBMatricula] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [DBMatricula] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [DBMatricula] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [DBMatricula] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [DBMatricula] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [DBMatricula] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [DBMatricula] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [DBMatricula] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [DBMatricula] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [DBMatricula] SET RECOVERY FULL 
+GO
+ALTER DATABASE [DBMatricula] SET  MULTI_USER 
+GO
+ALTER DATABASE [DBMatricula] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [DBMatricula] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [DBMatricula] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [DBMatricula] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [DBMatricula] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'DBMatricula', N'ON'
+GO
+ALTER DATABASE [DBMatricula] SET QUERY_STORE = OFF
+GO
+USE [DBMatricula]
+GO
+/****** Object:  Table [dbo].[Areas]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Areas](
+	[idArea] [int] IDENTITY(1,1) NOT NULL,
+	[nombreArea] [nvarchar](300) NULL,
+	[activo] [bit] NOT NULL,
+	[enteredDate] [datetime] NULL,
+	[lastUpDate] [datetime] NULL,
+	[idCarrera] [int] NOT NULL,
+ CONSTRAINT [PK_Areas_idArea] PRIMARY KEY CLUSTERED 
+(
+	[idArea] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Bajas]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Bajas](
+	[idBajas] [int] IDENTITY(1,1) NOT NULL,
+	[bajaAcademica] [smallint] NULL,
+	[bajaPersonal] [smallint] NULL,
+	[bajaE] [smallint] NULL,
+	[bajaR] [smallint] NULL,
+	[enteredDate] [datetime] NULL,
+	[lastUpDate] [datetime] NULL,
+	[idMatricula] [int] NOT NULL,
+ CONSTRAINT [PK_Bajas_idBajas] PRIMARY KEY CLUSTERED 
+(
+	[idBajas] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Carreras]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Carreras](
+	[idCarrera] [int] IDENTITY(1,1) NOT NULL,
+	[nombreCarrera] [nvarchar](250) NULL,
+	[enteredDate] [datetime] NULL,
+	[lastUpDate] [datetime] NULL,
+ CONSTRAINT [PK_Carreras_idCarreras] PRIMARY KEY CLUSTERED 
+(
+	[idCarrera] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Cuatrimestres]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cuatrimestres](
+	[idCuatri] [int] IDENTITY(1,1) NOT NULL,
+	[nombreCuatri] [nvarchar](200) NULL,
+	[claveCuatri] [nvarchar](100) NULL,
+	[enteredDate] [datetime] NULL,
+	[lastUpDate] [datetime] NULL,
+ CONSTRAINT [PK_Cuatris_idCuatri] PRIMARY KEY CLUSTERED 
+(
+	[idCuatri] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Matriculas]    Script Date: 18/07/2021 10:09:22 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Matriculas](
+	[idMatricula] [int] IDENTITY(1,1) NOT NULL,
+	[grupo] [nchar](5) NULL,
+	[grado] [nchar](3) NULL,
+	[turno] [nchar](15) NULL,
+	[anio] [nchar](5) NULL,
+	[qtyIniHom] [smallint] NULL,
+	[qtyIniMuj] [smallint] NULL,
+	[qtyDiscHom] [smallint] NULL,
+	[qtyDiscMuj] [smallint] NULL,
+	[reinscHom] [tinyint] NULL,
+	[reinscMuj] [tinyint] NULL,
+	[enteredDate] [datetime] NULL,
+	[lastUpDate] [datetime] NULL,
+	[idArea] [int] NOT NULL,
+	[idCuatri] [int] NOT NULL,
+	[idRowID] [nvarchar](40) NULL,
+ CONSTRAINT [PK_Matriculas_idMatricula] PRIMARY KEY CLUSTERED 
+(
+	[idMatricula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Areas] ON 
+GO
+INSERT [dbo].[Areas] ([idArea], [nombreArea], [activo], [enteredDate], [lastUpDate], [idCarrera]) VALUES (2, N'Multimedia y Comercio', 1, CAST(N'2021-07-18T21:53:12.230' AS DateTime), NULL, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Areas] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Carreras] ON 
+GO
+INSERT [dbo].[Carreras] ([idCarrera], [nombreCarrera], [enteredDate], [lastUpDate]) VALUES (1, N'Tecnologias de la Informacion', CAST(N'2021-07-18T21:38:02.333' AS DateTime), NULL)
+GO
+INSERT [dbo].[Carreras] ([idCarrera], [nombreCarrera], [enteredDate], [lastUpDate]) VALUES (2, N'Administracion', CAST(N'2021-07-18T21:38:05.003' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Carreras] OFF
+GO
+ALTER TABLE [dbo].[Areas] ADD  DEFAULT ((1)) FOR [activo]
+GO
+ALTER TABLE [dbo].[Areas] ADD  DEFAULT (getdate()) FOR [enteredDate]
+GO
+ALTER TABLE [dbo].[Bajas] ADD  DEFAULT (getdate()) FOR [enteredDate]
+GO
+ALTER TABLE [dbo].[Carreras] ADD  DEFAULT (getdate()) FOR [enteredDate]
+GO
+ALTER TABLE [dbo].[Cuatrimestres] ADD  DEFAULT (getdate()) FOR [enteredDate]
+GO
+ALTER TABLE [dbo].[Matriculas] ADD  DEFAULT (getdate()) FOR [enteredDate]
+GO
+ALTER TABLE [dbo].[Matriculas] ADD  DEFAULT (newid()) FOR [idRowID]
+GO
+ALTER TABLE [dbo].[Areas]  WITH CHECK ADD  CONSTRAINT [FK_Carreras_idCarrera] FOREIGN KEY([idCarrera])
+REFERENCES [dbo].[Carreras] ([idCarrera])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Areas] CHECK CONSTRAINT [FK_Carreras_idCarrera]
+GO
+ALTER TABLE [dbo].[Bajas]  WITH CHECK ADD  CONSTRAINT [FK_Matriculas_idMatricula] FOREIGN KEY([idMatricula])
+REFERENCES [dbo].[Matriculas] ([idMatricula])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Bajas] CHECK CONSTRAINT [FK_Matriculas_idMatricula]
+GO
+ALTER TABLE [dbo].[Matriculas]  WITH CHECK ADD  CONSTRAINT [FK_Areas_idArea] FOREIGN KEY([idArea])
+REFERENCES [dbo].[Areas] ([idArea])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Matriculas] CHECK CONSTRAINT [FK_Areas_idArea]
+GO
+ALTER TABLE [dbo].[Matriculas]  WITH CHECK ADD  CONSTRAINT [FK_Cuatrimestres_idCuatri] FOREIGN KEY([idCuatri])
+REFERENCES [dbo].[Cuatrimestres] ([idCuatri])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Matriculas] CHECK CONSTRAINT [FK_Cuatrimestres_idCuatri]
+GO
+USE [master]
+GO
+ALTER DATABASE [DBMatricula] SET  READ_WRITE 
+GO
